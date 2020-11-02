@@ -25,23 +25,18 @@ moveLeft() :-
 	NX is X-1,
 	setPosition(Y,NX).
 
-% TODO: T steps towards field HAPPY (does not work for T>1)
+% TODO: T steps towards field HAPPY (returns too many values)
 towardsHappy(0).
-
 towardsHappy(T) :-
-	moveUp(); 
-	T > 1,
-	NT is T-1,
-	towardsHappy(NT),!.
+	towardsHappy_once(),
+	TN is T-1,
+	towardsHappy(TN).
 
-towardsHappy(T) :-
-	moveRight();
-	T > 1, 
-	NT is T-1,
-	towardsHappy(NT),!.
+towardsHappy_once() :-
+	moveUp(),!.
 
-towardsHappy(T) :-
-	moveLeft();
-	T > 1,
-	NT is T-1,
-	towardsHappy(NT),!.
+towardsHappy_once() :-
+	moveRight(),!.
+
+towardsHappy_once() :-
+	moveLeft().
