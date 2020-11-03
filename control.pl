@@ -25,18 +25,24 @@ moveLeft() :-
 	NX is X-1,
 	setPosition(Y,NX).
 
-% TODO: T steps towards field HAPPY (returns too many values)
-towardsHappy(0).
+% towardsEmotion should be used with negation, e.g.: \+towardsHappy(2).
+% T is number of steps
 towardsHappy(T) :-
-	towardsHappy_once(),
+	T > 0,
+	% returns false if movement is possible (no wall blocks it)
+	\+moveUp(),
+	\+moveRight(),
+	\+moveLeft().
 	TN is T-1,
 	towardsHappy(TN).
 
-towardsHappy_once() :-
-	moveUp(),!.
+towardsSad(T) :-
+	T > 0,
+	% returns false if movement is possible (no wall blocks it)
+	\+moveDown(),
+	\+moveRight(),
+	\+moveLeft().
+	TN is T-1,
+	towardsSad(TN).
 
-towardsHappy_once() :-
-	moveRight(),!.
-
-towardsHappy_once() :-
-	moveLeft().
+% TODO: how to write other TowardsEmotion predicates?
