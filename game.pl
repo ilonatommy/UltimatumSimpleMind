@@ -1,19 +1,19 @@
 moveAccordingToEmotion(Emo, Steps) :-
 	Emo == happy -> 
 		towardsHappy(Steps);
-		Emo == sad ->
-			towardsSad(Steps);
-			Emo == angry ->
-				towardsAngry(Steps);
-				Emo == fearful ->
-					towardsFearful(Steps);
-					Emo == calm ->
-						towardsCalm(Steps);
-						Emo == disgusted ->
-							towardsDisgusted(Steps);
-							Emo == surprised ->
-								towardsSurprised(steps);
-								callable(true).	
+	Emo == sad ->
+		towardsSad(Steps);
+	Emo == angry ->
+		towardsAngry(Steps);
+	Emo == fearful ->
+		towardsFearful(Steps);
+	Emo == calm ->
+		towardsCalm(Steps);
+	Emo == disgusted ->
+		towardsDisgusted(Steps);
+	Emo == surprised ->
+		towardsSurprised(steps);
+	callable(true).	
 
 
 % RobotOffer is not returned as deduced value. Why? 
@@ -36,3 +36,6 @@ humanDecides(Decision) :-
 
 % TODO: add a predicate for one round of game and a predicate with 
 % startup (setting the player on the board at initial location).
+
+init_state :- 
+	setPosition(2,3).
