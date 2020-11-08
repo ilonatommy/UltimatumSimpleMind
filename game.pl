@@ -1,4 +1,4 @@
-%TODO keep score (or should be kept outside?)
+%TODO keep score (or should it be kept outside?)
 %TODO enforce limit on offers
 
 moveAccordingToEmotion(Emo, Steps) :-
@@ -25,7 +25,6 @@ humanOffers(Offer, EmoFace, EmoVoice, RobotOffer) :-
 	board(Y,X, FieldValue), 
 	reportRobotDecision(FieldValue > 0 -> yes ; no),
 	plus(Offer, FieldValue, RobotOffer).
-	
 
 humanDecides(Decision) :-
 	Decision == yes ->
