@@ -3,8 +3,8 @@
 */
 
 :- [
-    control,
-    game,
+    board_rand,
     board_fixed,
-    board_rand
+    control,
+    game
     ].

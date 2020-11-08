@@ -1,41 +1,40 @@
+%TODO keep score (or should be kept outside?)
+%TODO enforce limit on offers
+
 moveAccordingToEmotion(Emo, Steps) :-
 	Emo == happy -> 
-		towardsHappy(Steps);
+		\+towardsHappy(Steps);
 	Emo == sad ->
-		towardsSad(Steps);
+		\+towardsSad(Steps);
 	Emo == angry ->
-		towardsAngry(Steps);
+		\+towardsAngry(Steps);
 	Emo == fearful ->
-		towardsFearful(Steps);
+		\+towardsFearful(Steps);
 	Emo == calm ->
-		towardsCalm(Steps);
+		\+towardsCalm(Steps);
 	Emo == disgusted ->
-		towardsDisgusted(Steps);
+		\+towardsDisgusted(Steps);
 	Emo == surprised ->
-		towardsSurprised(steps);
+		\+towardsSurprised(Steps);
 	callable(true).	
 
-
-% RobotOffer is not returned as deduced value. Why? 
-% TODO: fix it
-humanOffers(Offer, EmoFace, EmoVoice, RobotDecision, RobotOffer) :-
+humanOffers(Offer, EmoFace, EmoVoice, RobotOffer) :-
 	moveAccordingToEmotion(EmoFace, 2),
 	moveAccordingToEmotion(EmoVoice, 1),	
 	position(Y,X),
-	FieldValue = board_r(Y,X),
-	% TODO: add boundaries of 1 and 9:
-	RobotOffer = Offer + FieldValue,
-	FieldValue > 0 ->
-		RobotDecision = true;
-		RobotDecision = false.
+	board(Y,X, FieldValue), 
+	reportRobotDecision(FieldValue > 0 -> yes ; no),
+	plus(Offer, FieldValue, RobotOffer).
+	
 
 humanDecides(Decision) :-
 	Decision == yes ->
 		towardsHappy(1);
 		towardsSad(1).
 
-% TODO: add a predicate for one round of game and a predicate with 
-% startup (setting the player on the board at initial location).
-
 init_state :- 
 	setPosition(2,3).
+
+reportRobotDecision(RobotDecision) :-
+	write("Robot "), 
+	RobotDecision == yes -> write("Agreed") ; write("Declined"), nl.
