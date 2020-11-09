@@ -29,12 +29,14 @@ humanOffers(Offer, EmoFace, EmoVoice, RobotOffer) :-
 	reportRobotDecision(FieldValue > 0 -> yes ; no),
 	plus(Offer, FieldValue, RobotOffer).
 
-humanDecides(Decision) :-
-	Decision == yes ->
-		\+towardsHappy(1);
-		\+towardsSad(1),
+humanDecides(yes) :-
+	\+towardsHappy(1),
 	write("Make your offer!").
 
+humanDecides(no) :-
+	\+towardsSad(1),
+	write("Make your offer!").
+	
 init_state :- 
 	setPosition(2,3).
 
