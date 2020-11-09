@@ -1,22 +1,25 @@
 %TODO keep score (or should it be kept outside?)
 %TODO enforce limit on offers
+moveAccordingToEmotion(happy, Steps) :-
+	\+towardsHappy(Steps).
 
-moveAccordingToEmotion(Emo, Steps) :-
-	Emo == happy -> 
-		\+towardsHappy(Steps);
-	Emo == sad ->
-		\+towardsSad(Steps);
-	Emo == angry ->
-		\+towardsAngry(Steps);
-	Emo == fearful ->
-		\+towardsFearful(Steps);
-	Emo == calm ->
-		\+towardsCalm(Steps);
-	Emo == disgusted ->
-		\+towardsDisgusted(Steps);
-	Emo == surprised ->
-		\+towardsSurprised(Steps);
-	callable(true).	
+moveAccordingToEmotion(sad, Steps) :-
+	\+towardsSad(Steps).
+
+moveAccordingToEmotion(angry, Steps) :-
+	\+towardsAngry(Steps).	
+
+moveAccordingToEmotion(fearful, Steps) :-
+	\+towardsFearful(Steps).
+
+moveAccordingToEmotion(calm, Steps) :-
+	\+towardsCalm(Steps).
+
+moveAccordingToEmotion(disgusted, Steps) :-
+	\+towardsDisgusted(Steps).
+
+moveAccordingToEmotion(surprised, Steps) :-
+	\+towardsSurprised(Steps).
 
 humanOffers(Offer, EmoFace, EmoVoice, RobotOffer) :-
 	moveAccordingToEmotion(EmoFace, 2),
@@ -28,9 +31,9 @@ humanOffers(Offer, EmoFace, EmoVoice, RobotOffer) :-
 
 humanDecides(Decision) :-
 	Decision == yes ->
-		towardsHappy(1);
-		towardsSad(1),
-		write("Make your offer!").
+		\+towardsHappy(1);
+		\+towardsSad(1),
+	write("Make your offer!").
 
 init_state :- 
 	setPosition(2,3).

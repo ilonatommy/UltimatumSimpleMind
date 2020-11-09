@@ -152,7 +152,7 @@ towardsFearful(T) :-
 	TN is T-1,
 	towardsSurprised(TN).
 
-towardsCalm(T) :-
+towardsCalm(T) :- % TODO: consider refactoring i.e. devide in to clauses
 	T > 0,
 	position(Y,X),
 	(	
