@@ -21,15 +21,16 @@ moveAccordingToEmotion(Emo, Steps) :-
 humanOffers(Offer, EmoFace, EmoVoice, RobotOffer) :-
 	moveAccordingToEmotion(EmoFace, 2),
 	moveAccordingToEmotion(EmoVoice, 1),	
-	position(Y,X),
-	board(Y,X, FieldValue), 
+	position(Y, X),
+	board(Y, X, FieldValue), 
 	reportRobotDecision(FieldValue > 0 -> yes ; no),
 	plus(Offer, FieldValue, RobotOffer).
 
 humanDecides(Decision) :-
 	Decision == yes ->
 		towardsHappy(1);
-		towardsSad(1).
+		towardsSad(1),
+		write("Make your offer!").
 
 init_state :- 
 	setPosition(2,3).
