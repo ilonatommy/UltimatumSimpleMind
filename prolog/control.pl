@@ -1,56 +1,48 @@
 setPosition(Y,X) :-
-	board(Y,X,_),
-	% remove the previous position from KB
-	retractall(position(_,_)),
-	% add the current one
-	asserta(position(Y,X)).
+	board(Y,X,_).
 
 % PRIVATE SECTION
-moveUp() :-
-	position(Y,X),
+moveUp(Y,X) :-
 	NY is Y-1,
 	setPosition(NY,X).
 
-moveDown() :-
-	position(Y,X),
+moveDown(Y,X) :-
 	NY is Y+1,
 	setPosition(NY,X).
 
-moveRight() :-
-	position(Y,X),
+moveRight(Y,X) :-
 	NX is X+1,
 	setPosition(Y,NX).
 
-moveLeft() :-
-	position(Y,X),
+moveLeft(Y,X) :-
 	NX is X-1,
 	setPosition(Y,NX).
 
-moveUpOrLeft() :-
+moveUpOrLeft(Y,X) :-
 	(
-		\+moveUp() ->
-		moveLeft();
+		\+moveUp(Y,X) ->
+		moveLeft(Y,X);
 		callable(true)
 	).
 
-moveUpOrRight() :-
+moveUpOrRight(Y,X) :-
 	(
-		\+moveUp() ->
-		moveRight();
+		\+moveUp(Y,X) ->
+		moveRight(Y,X);
 		callable(true)
 	).
 
-moveDownOrLeft() :-
+moveDownOrLeft(Y,X) :-
 	(
-		\+moveDown() ->
-		moveLeft();
+		\+moveDown(Y,X) ->
+		moveLeft(Y,X);
 		callable(true)
 	).
 
-moveDownOrRight() :-
+moveDownOrRight(Y,X) :-
 	(
-		\+moveDown() ->
-		moveRight();
+		\+moveDown(Y,X) ->
+		moveRight(Y,X);
 		callable(true)
 	).
 
@@ -58,103 +50,98 @@ moveDownOrRight() :-
 
 % towardsEmotion should be used with negation, e.g.: \+towardsHappy(2).
 % T is number of steps
-towardsHappy(T) :-
+towardsHappy(Y,X,T) :-
 	T > 0,
 	% returns false if movement is possible (no wall blocks it)
 	(
 		% if move up failed then condition true
-		\+moveUp() ->
+		\+moveUp(Y,X) ->
 		% and we try to move right
 		(
-			\+moveRight() ->
-			moveLeft();
+			\+moveRight(Y,X) ->
+			moveLeft(Y,X);
 			callable(true)
 		);
 		callable(true)
 	),
 	TN is T-1,
-	towardsHappy(TN).
+	towardsHappy(Y,X,TN).
 
-towardsSad(T) :-
+towardsSad(Y,X,T) :-
 	T > 0,
 	% returns false if movement is possible (no wall blocks it)
 	(
 		% if move up failed then condition true
-		\+moveDown() ->
+		\+moveDown(Y,X) ->
 		% and we try to move right
 		(
-			\+moveRight() ->
-			moveLeft();
+			\+moveRight(Y,X) ->
+			moveLeft(Y,X);
 			callable(true)
 		);
 		callable(true)
 	),
 	TN is T-1,
-	towardsSad(TN).
+	towardsSad(Y,X,TN).
 
-towardsDisgusted(T) :-
+towardsDisgusted(Y,X,T) :-
 	T > 0,
-	position(Y,_),
 	(	
 		Y>2 ->
-		moveUpOrLeft();
+		moveUpOrLeft(Y,X);
 		(
 			Y<2 ->
-			moveDownOrLeft();
-			moveLeft()
+			moveDownOrLeft(Y,X);
+			moveLeft(Y,X)
 		)
 	),
 	TN is T-1,
-	towardsDisgusted(TN).
+	towardsDisgusted(Y,X,TN).
 
-towardsSurprised(T) :-
+towardsSurprised(Y,X,T) :-
 	T > 0,
-	position(Y,_),
 	(	
 		Y>2 ->
-		moveUpOrRight();
+		moveUpOrRight(Y,X);
 		(
 			Y<2 ->
-			moveDownOrRight();
-			moveRight()
+			moveDownOrRight(Y,X);
+			moveRight(Y,X)
 		)
 	),
 	TN is T-1,
-	towardsSurprised(TN).
+	towardsSurprised(Y,X,TN).
 
-towardsAngry(T) :-
+towardsAngry(Y,X,T) :-
 	T > 0,
-	position(Y,_),
 	(	
 		Y>6 ->
-		moveDownOrLeft();
+		moveDownOrLeft(Y,X);
 		(
 			Y<6 ->
-			moveUpOrLeft();
-			moveLeft()
+			moveUpOrLeft(Y,X);
+			moveLeft(Y,X)
 		)
 	),
 	TN is T-1,
-	towardsAngry(TN).
+	towardsAngry(Y,X,TN).
 
-towardsFearful(T) :-
+towardsFearful(Y,X,T) :-
 	T > 0,
-	position(Y,_),
 	(	
 		Y>6 ->
-		moveUpOrRight();
+		moveUpOrRight(Y,X);
 		(
 			Y<6 ->
-			moveDownOrRight();
-			moveRight()
+			moveDownOrRight(Y,X);
+			moveRight(Y,X)
 		)
 	),
 	TN is T-1,
-	towardsSurprised(TN).
+	towardsSurprised(Y,X,TN).
 
-towardsCalm(T) :- % TODO: consider refactoring i.e. devide in to clauses
+towardsCalm(Y,X,T) :- % TODO: consider refactoring i.e. devide in to clauses
 	T > 0,
-	position(Y,X),
 	(	
 		Y==4 ->
 		% we are at CALM row
@@ -164,18 +151,18 @@ towardsCalm(T) :- % TODO: consider refactoring i.e. devide in to clauses
 			callable(true);
 			(
 				X<2 ->
-				moveRight();
-				moveLeft()
+				moveRight(Y,X);
+				moveLeft(Y,X)
 			)
 		);
 		% we are not at CALM row
 		(
 			Y<4 ->
 			% we are above it
-			moveDown();
+			moveDown(Y,X);
 			% we are below it
-			moveUp()
+			moveUp(Y,X)
 		)		
 	),
 	TN is T-1,
-	towardsCalm(TN).
+	towardsCalm(Y,X,TN).

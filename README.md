@@ -1,6 +1,11 @@
 # UltimatumSimpleMind
 Decision module for Ultimatum game, based on rules in Prolog.
 
+Prolog instalation:
+sudo add-apt-repository ppa:swi-prolog/stable
+sudo apt-get update
+sudo apt-get install swi-prolog
+
 ![game_board](img/board.png)
 
 ### Rules:
