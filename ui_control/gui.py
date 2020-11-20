@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 from tkinter import Tk, Canvas, PhotoImage, mainloop, NW, Label, Frame, Button, LEFT
 from PIL import ImageTk, Image
@@ -59,11 +61,6 @@ class Gui:
                               highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
         start_button_window = self.canvas.create_window(xOffset * 5 + 2 * BUTTON_WIDTH * 10, yOffset, anchor='nw',
                                                         window=start_button)
-
-
-    def start_clicked(self):
-        pass
-
 
     def onInfo(self):
         if self.infoHidden:

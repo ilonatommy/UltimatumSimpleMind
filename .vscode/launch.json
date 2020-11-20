@@ -1,0 +1,4 @@
+{
+    "env": {"PYTHONPATH": "${workspaceRoot}"},
+    "cwd": "${workspaceRoot}"
+}
