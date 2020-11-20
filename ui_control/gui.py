@@ -2,6 +2,8 @@ import os
 from tkinter import Tk, Canvas, PhotoImage, mainloop, NW, Label, Frame, Button, LEFT
 from PIL import ImageTk, Image
 
+from decision_module import DecisionModule
+
 IMG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'img'))
 WIDTH = 1000
 HEIGHT = 800
@@ -25,6 +27,8 @@ class Gui:
         self.canvas.pack()
         self.backgroundImg = getBackgroundImg()
 
+        self.dm = DecisionModule()
+
         self.info = Label(self.tk, text="", background="#FFF")
         start_button_window = self.canvas.create_window(100, 100, anchor='nw',
                                                         window=self.info)
@@ -44,7 +48,7 @@ class Gui:
                              highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
         quit_button_window = self.canvas.create_window(xOffset, yOffset, anchor='nw', window=quit_button)
 
-        start_button = Button(self.tk, text="START", command=self.tk.quit, anchor='n',
+        start_button = Button(self.tk, text="START", command=self.dm.start_game, anchor='n',
                               width=BUTTON_WIDTH, activebackground="#b5f1f7",
                               highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
         start_button_window = self.canvas.create_window(xOffset * 3 + BUTTON_WIDTH * 10, yOffset, anchor='nw',
@@ -55,6 +59,11 @@ class Gui:
                               highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
         start_button_window = self.canvas.create_window(xOffset * 5 + 2 * BUTTON_WIDTH * 10, yOffset, anchor='nw',
                                                         window=start_button)
+
+
+    def start_clicked(self):
+        pass
+
 
     def onInfo(self):
         if self.infoHidden:

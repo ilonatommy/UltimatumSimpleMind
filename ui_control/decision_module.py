@@ -23,9 +23,6 @@ class DecisionModule:
         response = list(self.prolog.query("humanDecides({}, {}, {}, Y_out, X_out)".format(y, x, decision)))[0]
         return response["Y_out"], response["X_out"]
 
-
-
-
 if __name__ == "__main__":
     offer = 5
     emoFace = "disgusted"
