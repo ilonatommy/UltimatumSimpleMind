@@ -1,7 +1,10 @@
-module:- [
-    board/3,
-    is_valid/2
-].
+:- module(
+    board_fixed,
+    [
+        board/3,
+        is_valid/2
+    ]
+).
 
 board(0, 2, -3).
 

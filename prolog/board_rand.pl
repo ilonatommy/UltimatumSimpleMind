@@ -1,7 +1,10 @@
-module:- [
-    board_r/3,
-    is_valid_r/2
-].
+:- module(
+	board_rand,
+    [
+		board_r/3,
+    	is_valid_r/2
+	]
+).
 
 board_r(0, 2, -3).
 

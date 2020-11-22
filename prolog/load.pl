@@ -6,6 +6,7 @@
 :- [
     board_rand,
     board_fixed,
-    control,
+    control_2_0,
+    % control,
     game
     ].
