@@ -1,3 +1,8 @@
+module:- [
+    board_r/3,
+    is_valid_r/2
+].
+
 board_r(0, 2, -3).
 
 board_r(1, 1, Y) :- 
@@ -58,3 +63,6 @@ board_r(7, 3, Y) :-
 	random_between(2, 3, Y).
 
 board_r(8, 2, 3).
+
+is_valid_r(Y, X) :-
+    board_r(Y, X, _).

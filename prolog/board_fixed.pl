@@ -1,3 +1,8 @@
+module:- [
+    board/3,
+    is_valid/2
+].
+
 board(0, 2, -3).
 
 board(1, 1, -2).
@@ -39,3 +44,6 @@ board(7, 2, 2).
 board(7, 3, 2).
 
 board(8, 2, 3).
+
+is_valid(Y, X) :-
+    board(Y, X, _).
