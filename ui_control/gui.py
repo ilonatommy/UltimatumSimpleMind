@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os
-from tkinter import Tk, Canvas, PhotoImage, mainloop, NW, Label, Frame, Button, LEFT
+from tkinter import Tk, Canvas, PhotoImage, mainloop, NW, Label, Frame, Button, LEFT, Text, OptionMenu, StringVar
 from PIL import ImageTk, Image
 
 from decision_module import DecisionModule
@@ -37,6 +37,21 @@ class Gui:
 
         self.infoHidden = True
         self.startHidden = True
+        self.voiceEmotions = ["calm", "angry", "fearful", "happy", "sad"]
+        self.voice_options = StringVar(self.tk)
+        self.voice_options.set(self.voiceEmotions[0])
+
+        self.faceEmotions = ["calm", "angry", "fearful", "happy", "sad", "surprised",  "disgusted"]
+        self.face_options = StringVar(self.tk)
+        self.face_options.set(self.faceEmotions[0])
+
+        self.offers = list(range(1, 10))
+        self.offer_options = StringVar(self.tk)
+        self.offer_options.set(self.offers[4])
+
+        self.decisions = ["yes", "no"]
+        self.decision_options = StringVar(self.tk)
+        self.decision_options.set(self.decisions[0])
 
     def fixWindowSize(self, ):
         self.tk.geometry('{}x{}'.format(WIDTH, HEIGHT))
@@ -50,7 +65,7 @@ class Gui:
                              highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
         quit_button_window = self.canvas.create_window(xOffset, yOffset, anchor='nw', window=quit_button)
 
-        start_button = Button(self.tk, text="START", command=self.dm.start_game, anchor='n',
+        start_button = Button(self.tk, text="START", command=self.onStart, anchor='n',
                               width=BUTTON_WIDTH, activebackground="#b5f1f7",
                               highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
         start_button_window = self.canvas.create_window(xOffset * 3 + BUTTON_WIDTH * 10, yOffset, anchor='nw',
@@ -70,11 +85,67 @@ class Gui:
         self.infoHidden = not self.infoHidden
 
     def onStart(self):
-        # TODO: stworzyć przyciski dla wejsciowych emocji + toggle dla przyciskania START
-        quit_button = Button(tk, text="EMOTION", command=self.tk.quit, anchor='n',
-                             width=BUTTON_WIDTH, activebackground="#b5f1f7",
-                             highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
-        quit_button_window = self.canvas.create_window(100, 10, anchor='nw', window=quit_button)
+        self.dm.start_game()
+        self.onNextRound()
+
+    def onConfirmOffer(self):
+        emotion_face = self.face_options.get()
+        emotion_voice = self.voice_options.get()
+        offer = self.offer_options.get()
+        robot_offer, robot_decision = self.dm.humanOffer(offer, emotion_face, emotion_voice)
+        if robot_decision == "yes":
+            decision_text = "I accept your offer!"
+        else:
+            decision_text = "I decline your offer! We both get nothing."
+        label_robot_decision = Label(self.tk, text=decision_text)
+        label_decision_window = self.canvas.create_window(700, 80, anchor='nw', window=label_robot_decision)
+
+        label_robot_offer = Label(self.tk, text="I offer you " + str(robot_offer) + ".\nAre you accepting?")
+        label_offer_window = self.canvas.create_window(700, 180, anchor='nw', window=label_robot_offer)
+
+        decision = OptionMenu(self.tk, self.decision_options, *self.decisions)
+        decision_window = self.canvas.create_window(700, 220, anchor='nw', window=decision)
+
+        confirm_decision_button = Button(self.tk, text="CONFIRM", command=self.onConfirmDecision, anchor='n',
+                              width=BUTTON_WIDTH, activebackground="#b5f1f7",
+                              highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
+        confirm_decision_button_window = self.canvas.create_window(700, 280, anchor='nw', window=confirm_decision_button)
+
+    def onConfirmDecision(self):
+        human_decision = self.decision_options.get()
+        if human_decision == "yes":
+            after_round_text = "Perfect! You get offered money!"
+        else:
+            after_round_text = "You both get nothing!"
+        label_after_round = Label(self.tk, text=after_round_text)
+        label_after_round_window = self.canvas.create_window(700, 300, anchor='nw', window=label_after_round)
+
+        next_round_button = Button(self.tk, text="NEXT ROUND", command=self.onNextRound, anchor='n',
+                                         width=BUTTON_WIDTH, activebackground="#b5f1f7",
+                                         highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
+        next_round_button_window = self.canvas.create_window(700, 400, anchor='nw',
+                                                                   window=next_round_button)
+
+    def onNextRound(self):
+        label_voice = Label(self.tk, text="Choose emotion in voice:")
+        label_voice_window = self.canvas.create_window(50, 80, anchor='nw', window=label_voice)
+        choice_voice = OptionMenu(self.tk, self.voice_options, *self.voiceEmotions)
+        voice_window = self.canvas.create_window(50, 100, anchor='nw', window=choice_voice)
+
+        label_face = Label(self.tk, text="Choose emotion in facial expression:")
+        label_face_window = self.canvas.create_window(50, 180, anchor='nw', window=label_face)
+        choice_face = OptionMenu(self.tk, self.face_options, *self.faceEmotions)
+        face_window = self.canvas.create_window(50, 200, anchor='nw', window=choice_face)
+
+        label_offer = Label(self.tk, text="Choose amount of money you offer:")
+        label_offer_window = self.canvas.create_window(50, 280, anchor='nw', window=label_offer)
+        choice_offer = OptionMenu(self.tk, self.offer_options, *self.offers)
+        face_window = self.canvas.create_window(50, 300, anchor='nw', window=choice_offer)
+
+        confirm_offer_button = Button(self.tk, text="CONFIRM", command=self.onConfirmOffer, anchor='n',
+                                      width=BUTTON_WIDTH, activebackground="#b5f1f7",
+                                      highlightbackground="#b5f1f7", highlightthickness=BUTTON_FRAME_THICKNESS)
+        confirm_offer_button_window = self.canvas.create_window(50, 400, anchor='nw', window=confirm_offer_button)
 
 
 tk = Tk()
