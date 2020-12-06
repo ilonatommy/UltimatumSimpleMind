@@ -4,7 +4,7 @@ import os
 from tkinter import Tk, Canvas, PhotoImage, mainloop, NW, Label, Frame, Button, LEFT, Text, OptionMenu, StringVar
 from PIL import ImageTk, Image
 
-from decision_module import DecisionModule
+from controller.decision_module import DecisionModule
 
 IMG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'img'))
 WIDTH = 1000
