@@ -47,13 +47,6 @@ moveLeft() :-
 	NX is X-1,
 	setPosition(Y, NX).
 
-% moveUpOrLeft() :-
-% 	(
-% 		\+moveUp() ->
-% 		moveLeft();
-% 		callable(true)
-% 	).
-
 moveUpOrLeft() :-
 	moveUp(),
 	write("Moved up"), nl.
@@ -67,13 +60,6 @@ moveUpOrLeft() :-
 	\+moveUp(),
 	\+moveLeft(),
 	write("Move impossible"), nl.
-
-% moveUpOrRight(Y, X) :-
-% 	(
-% 		\+moveUp(Y, X) ->
-% 		moveRight(Y, X);
-% 		callable(true)
-% 	).
 
 moveUpOrRight() :-
 	moveUp(),
@@ -89,13 +75,6 @@ moveUpOrRight() :-
 	\+moveRight(),
 	write("Move impossible"), nl.
 
-% moveDownOrLeft(Y, X) :-
-% 	(
-% 		\+moveDown(Y, X) ->
-% 		moveLeft(Y, X);
-% 		callable(true)
-% 	).
-
 moveDownOrLeft() :-
 	moveDown(),
 	write("Moved up"), nl.
@@ -109,13 +88,6 @@ moveDownOrLeft() :-
 	\+moveDown(),
 	\+moveLeft(),
 	write("Move impossible"), nl.
-
-% moveDownOrRight(Y, X) :-
-% 	(
-% 		\+moveDown(Y, X) ->
-% 		moveRight(Y, X);
-% 		callable(true)
-% 	).
 
 moveDownOrRight() :-
 	moveDown(),
@@ -136,23 +108,6 @@ moveDownOrRight() :-
 % towardsEmotion should be used with negation, e.g.: \+towardsHappy(2).
 % T is number of steps
 
-% towardsHappy(Y, X, T) :-
-% 	T > 0,
-% 	% returns false if movement is possible (no wall blocks it)
-% 	(
-% 		% if move up failed then condition true
-% 		\+moveUp(Y, X) ->
-% 		% and we try to move right
-% 		(
-% 			\+moveRight(Y, X) ->
-% 			moveLeft(Y, X);
-% 			callable(true)
-% 		);
-% 		callable(true)
-% 	),
-% 	TN is T-1,
-% 	towardsHappy(Y, X, TN).
-
 towardsHappy(Y, X, T) :-
 	T > 0,
 	% returns false if movement is possible (no wall blocks it)
@@ -162,25 +117,6 @@ towardsHappy(Y, X, T) :-
 	TN is T-1,
 	towardsHappy(Y, X, TN).
 
-
-
-% towardsSad(Y, X, T) :-
-% 	T > 0,
-% 	% returns false if movement is possible (no wall blocks it)
-% 	(
-% 		% if move up failed then condition true
-% 		\+moveDown(Y, X) ->
-% 		% and we try to move right
-% 		(
-% 			\+moveRight(Y, X) ->
-% 			moveLeft(Y, X);
-% 			callable(true)
-% 		);
-% 		callable(true)
-% 	),
-% 	TN is T-1,
-% 	towardsSad(Y, X, TN).
-
 towardsSad(Y, X, T) :-
 	T > 0,
 	% returns false if movement is possible (no wall blocks it)
@@ -189,20 +125,6 @@ towardsSad(Y, X, T) :-
 	),
 	TN is T-1,
 	towardsSad(Y, X, TN).
-
-% towardsDisgusted(Y, X, T) :-
-% 	T > 0,
-% 	(	
-% 		Y>2 ->
-% 		moveUpOrLeft(Y, X);
-% 		(
-% 			Y<2 ->
-% 			moveDownOrLeft(Y, X);
-% 			moveLeft(Y, X)
-% 		)
-% 	),
-% 	TN is T-1,
-% 	towardsDisgusted(Y, X, TN).
 
 towardsDisgusted(Y, X, T) :-
 	T > 0,

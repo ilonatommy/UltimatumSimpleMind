@@ -18,8 +18,11 @@ class DecisionModule:
         response = list(
             self.prolog.query("humanOffers({}, {}, {}, RobotOffer, RobotDecision)"
                                           .format(offer, emoFace, emoVoice)))[0]
+        info = {
+            "offer": response["RobotOffer"], 
+            "decision": "accepted" if response["RobotDecision"] > 0 else "refused" }
 
-        return response["RobotOffer"], response["RobotDecision"]
+        return info
 
     def humanDecides(self, agreed):
         decision = "yes" if agreed else "no"
