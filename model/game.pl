@@ -46,9 +46,20 @@ humanOffers(Offer, EmoFace, EmoVoice, RobotOffer, RobotDecision) :-
 	moveAccordingToFaceEmotion(Y, X, EmoFace),
 	moveAccordingToVoiceEmotion(Y, X, EmoVoice),
 	board(Y, X, RobotDecision), 
-	% reportRobotDecision(RobotDecision > 0 -> yes ; no),
-	plus(Offer, RobotDecision, RobotOffer).
+	% reportRobotDecision(RobotDecision > 0 -> yes ; no),	plus(Offer, RobotDecision, UnadjustedRobotOffer),
+	clamp_value(UnadjustedRobotOffer, RobotOffer).
 
+clamp_value(V, Output) :-
+	V < 0,
+	Output is 0.
+
+clamp_value(V, Output) :-
+	V > 10,
+	Output is 10.
+	
+clamp_value(V, Output) :-
+	Output is V.
+	
 humanDecides(yes) :-
 	position(Y, X),
 	\+towardsHappy(Y, X, 1),
