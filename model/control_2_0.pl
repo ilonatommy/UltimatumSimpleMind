@@ -3,7 +3,7 @@
     Purpose: Defines control over the board
 */
 
-% regexp ([A-Za-z]+,)(?!\s) couse sb cannot into coding conventions
+% regexp ([A-Za-z]+,)(?!\s) - code fromatting
 
 module(
     control_2_0,
