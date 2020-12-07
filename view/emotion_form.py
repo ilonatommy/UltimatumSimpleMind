@@ -26,11 +26,6 @@ class EmotionForm(tk.Widget):
         self.offer_options.set(self.offers[4])
         self.offer_menu = tk.OptionMenu(self, self.offer_options, *self.offers)
 
-        self.decisions = ["yes", "no"]
-        self.decision_options = StringVar(self)
-        self.decision_options.set(self.decisions[0])
-        self.decision_menu = tk.OptionMenu(self, self.decision_options, *self.decisions)
-
         self.confirmation_button = tk.Button(self, text="CONFIRM", 
             command=self.onConfirmClicked,
             width=self.parent.settings.button_width, 
