@@ -26,7 +26,7 @@ class Controller():
         self.parent.show_game_controls()
 
     def onQuit(self):
-        self.parent.root.quit()
+        self.parent.parent.quit()
 
     def confirm_proposition(self, voice_emotion, face_emotion, offer_value):
         robot_answer = self.dm.humanOffer(offer_value, face_emotion, voice_emotion)

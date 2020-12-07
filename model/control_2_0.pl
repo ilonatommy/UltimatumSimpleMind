@@ -153,7 +153,7 @@ towardsAngry(Y, X, T) :-
 towardsFearful(Y, X, T) :-
 	T > 0,
 	(	
-		moveUpOrRightight()
+		moveUpOrRight()
 	),
 	TN is T-1,
 	towardsSurprised(Y, X, TN).
