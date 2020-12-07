@@ -1,7 +1,8 @@
 import tkinter as tk
-from tkinter import messagebox 
+from tkinter import messagebox
 
 from controller.decision_module import DecisionModule
+
 
 class Controller():
     def __init__(self, parent):
@@ -31,27 +32,28 @@ class Controller():
     def confirm_proposition(self, voice_emotion, face_emotion, offer_value):
         robot_answer = self.dm.humanOffer(offer_value, face_emotion, voice_emotion)
 
-        if robot_answer["decision"] == "agreed":
+        if robot_answer["decision"] == "accepted":
             print("robot accepted!")
-            self.robot_score += 10 - offer_value["offer"]
-            self.user_score += offer_value["offer"]
+            self.robot_score += int(offer_value)
+            self.user_score += 10 - int(offer_value)
             self.update_score()
         else:
-            print("robot denied")
+            print("robot declined")
 
-        user_answer = messagebox.askquestion("Robot has spoken!", 
-            "He {} your offer! He offers you {} in return. Do you accept?"
-                .format(robot_answer["decision"], robot_answer["offer"]))
+        user_answer = messagebox.askquestion("Robot has spoken!",
+                                             "He {} your offer! He offers you {}. Do you accept?"
+                                             .format(robot_answer["decision"], robot_answer["offer"]))
         if user_answer == "yes":
             print("user accepted!")
-            self.user_score += 10 - robot_answer["offer"]
-            self.robot_score += robot_answer["offer"]
+            self.user_score += robot_answer["offer"]
+            self.robot_score += 10 - robot_answer["offer"]
             self.update_score()
         else:
-            print("User denied")
+            print("User declined")
 
     def update_score(self):
         self.parent.scoreboard.update(self.robot_score, self.user_score)
+
 
 if __name__ == "__main__":
     c = Controller()

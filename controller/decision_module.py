@@ -20,7 +20,7 @@ class DecisionModule:
                                           .format(offer, emoFace, emoVoice)))[0]
         info = {
             "offer": response["RobotOffer"], 
-            "decision": "accepted" if response["RobotDecision"] > 0 else "refused" }
+            "decision": "accepted" if response["RobotDecision"] > 0 else "declined"}
 
         return info
 
