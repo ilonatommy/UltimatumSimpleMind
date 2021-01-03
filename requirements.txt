@@ -1,2 +1,9 @@
-pkg-resources==0.0.0
+certifi==2020.12.5
+hedgehog @ git+https://github.com/MaxHalford/hedgehog@d2b8630ff0d6158a5f47274519d727a8376a4291
+numpy==1.19.4
+pandas==1.2.0
 pyswip==0.2.10
+python-dateutil==2.8.1
+pytz==2020.5
+six==1.15.0
+vose @ git+https://github.com/MaxHalford/vose@7508eac2b2bc415279211d336f56d7d3510eed96

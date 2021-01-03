@@ -17,7 +17,6 @@ class DecisionModule:
     def humanDecides(self, agreed):
         self.dm.humanDecides(agreed)
 
-
 if __name__ == "__main__":
     # dorobic parametry wyjsciowe do prologa Y_out, X_out
     offer = 5

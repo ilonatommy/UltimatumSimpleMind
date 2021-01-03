@@ -1,5 +1,3 @@
-import os
-
 class BayesDecisionModule:
     def __init__(self):
         pass
