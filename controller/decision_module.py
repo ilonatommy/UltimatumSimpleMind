@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import os
-from model.BayesDecisionModule import BayesDecisionModule
+from model.bayes_decision_module import BayesDecisionModule
 from model.prolog_decision_module import PrologDecisionModule
 
 class DecisionModule:

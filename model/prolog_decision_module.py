@@ -4,7 +4,7 @@ from pyswip import Prolog
 class PrologDecisionModule:
     def __init__(self):
         self.prolog = Prolog()
-        prolog_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'model'))
+        prolog_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'model/prolog'))
         self.prolog.consult(os.path.join(prolog_path, 'load.pl'))
 
     def start_game(self):
