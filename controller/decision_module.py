@@ -1,34 +1,21 @@
 #!/usr/bin/env python
 
-from pyswip import Prolog
 import os
-
-PROLOG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'model'))
-
+from model.BayesDecisionModule import BayesDecisionModule
+from model.prolog_decision_module import PrologDecisionModule
 
 class DecisionModule:
-    def __init__(self, prolog_path=PROLOG_PATH):
-        self.prolog = Prolog()
-        self.prolog.consult(os.path.join(prolog_path, 'load.pl'))
+    def __init__(self):
+        self.dm = PrologDecisionModule()
 
     def start_game(self):
-        init_pos = list(self.prolog.query("init_state"))
+        self.dm.start_game()
 
     def humanOffer(self, offer, emoFace, emoVoice):
-        response = list(
-            self.prolog.query("humanOffers({}, {}, {}, RobotOffer, RobotDecision)"
-                                          .format(offer, emoFace, emoVoice)))[0]
-        info = {
-            "offer": response["RobotOffer"], 
-            "decision": "accepted" if response["RobotDecision"] > 0 else "declined"}
-
-        return info
+        return self.dm.humanOffer(offer, emoFace, emoVoice)
 
     def humanDecides(self, agreed):
-        decision = "yes" if agreed else "no"
-        response = list(
-            self.prolog.query("humanDecides({})"
-                .format(decision)))[0]
+        self.dm.humanDecides(agreed)
 
 
 if __name__ == "__main__":
