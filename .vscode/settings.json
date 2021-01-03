@@ -3,5 +3,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[javascript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "python.pythonPath": "/home/pawelgakan/anaconda3/envs/se_ultimatum/bin/python"
 }

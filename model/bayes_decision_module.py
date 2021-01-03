@@ -1,3 +1,5 @@
+import hedgehog as hh
+
 class BayesDecisionModule:
     def __init__(self):
         pass
@@ -10,3 +12,10 @@ class BayesDecisionModule:
 
     def humanDecides(self, agreed):
         pass
+
+
+if __name__ == "__main__":
+    bdm = BayesDecisionModule()
+    bn = hh.examples.asia()
+    dot = bn.graphviz()
+    path = dot.render('asia', directory='figures', format='svg', cleanup=True)
