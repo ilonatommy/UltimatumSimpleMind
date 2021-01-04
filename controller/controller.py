@@ -4,7 +4,7 @@ from tkinter import messagebox
 from controller.decision_module import DecisionModule
 
 
-class Controller():
+class Controller:
     def __init__(self, parent):
         self.dm = DecisionModule()
         self.infoHidden = False

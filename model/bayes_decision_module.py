@@ -426,12 +426,34 @@ class BayesDecisionModule:
 
         bn.prepare()
         self.bn = bn
+        self.emotionSimplifier = {'happy': 'positive',
+                                  'surprised': 'neutral',
+                                  'calm': 'neutral',
+                                  'disgusted': 'negative',
+                                  'sad': 'negative',
+                                  'fearful': 'negative',
+                                  'angry': 'negative'}
 
     def start_game(self):
         pass
 
     def humanOffer(self, offer, emoFace, emoVoice):
-        pass
+        emoFaceSimple = self.emotionSimplifier[emoFace]
+        emoVoiceSimple = self.emotionSimplifier[emoVoice]
+
+        sample = {
+            'player_emotion_face': emoFaceSimple,
+            'player_emotion_voice': emoVoiceSimple,
+            'player_offer': offer,
+            'robot_offer': None,
+            'robot_decision': None
+        }
+        response = self.bn.impute(sample)
+        info = {
+            "offer": response["robot_offer"],
+            "decision": "accepted" if response["robot_decision"] > 0 else "declined"}
+
+        return info
 
     def humanDecides(self, agreed):
         pass
@@ -442,5 +464,14 @@ if __name__ == "__main__":
     dot = bdm.bn.graphviz()
     path = dot.render('ultimatum', directory='figures', format='svg', cleanup=True)
 
-    pprint(bdm.bn.sample())
+    sample = {
+        'player_emotion_face': 'positive',
+        'player_emotion_voice': 'positive',
+        'player_offer': '1',
+        'robot_offer': None,
+        'robot_decision': None
+    }
+    response = bdm.bn.impute(sample)
+    pprint(response)
 
+    # pprint(bdm.bn.sample())
