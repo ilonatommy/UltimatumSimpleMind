@@ -1,12 +1,10 @@
-import tkinter as tk
 from tkinter import messagebox
-
-from controller.decision_module import DecisionModule
+from model.bayes_decision_module import BayesDecisionModule
 
 
 class Controller:
     def __init__(self, parent):
-        self.dm = DecisionModule()
+        self.dm = BayesDecisionModule()
         self.infoHidden = False
         self.parent = parent
 

@@ -450,8 +450,8 @@ class BayesDecisionModule:
         }
         response = self.bn.impute(sample)
         info = {
-            "offer": response["robot_offer"],
-            "decision": "accepted" if response["robot_decision"] > 0 else "declined"}
+            "offer": int(response["robot_offer"]),
+            "decision": "accepted" if response["robot_decision"] == "yes" else "declined"}
 
         return info
 
@@ -465,9 +465,9 @@ if __name__ == "__main__":
     path = dot.render('ultimatum', directory='figures', format='svg', cleanup=True)
 
     sample = {
-        'player_emotion_face': 'positive',
-        'player_emotion_voice': 'positive',
-        'player_offer': '1',
+        'player_emotion_face': 'neutral',
+        'player_emotion_voice': 'neutral',
+        'player_offer': '5',
         'robot_offer': None,
         'robot_decision': None
     }

@@ -1,11 +1,11 @@
 import tkinter as tk
-
 from controller.controller import Controller
 from view.assets import Assets
 from view.top_bar import TopBar
 from view.settings import Settings
 from view.emotion_form import EmotionForm
 from view.scoreboard import Scoreboard
+
 
 class MainApplication(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -16,25 +16,26 @@ class MainApplication(tk.Frame):
         self.settings = Settings()
         self.assets = Assets()
 
-        self.canvas = tk.Canvas(self, 
-            width=self.settings.width, 
-            height=self.settings.height)
+        self.canvas = tk.Canvas(self,
+                                width=self.settings.width,
+                                height=self.settings.height)
 
         self.scoreboard = Scoreboard(self)
         self.top_bar = TopBar(self)
         self.emotion_form = EmotionForm(self)
-        
-        self.canvas.create_image(self.settings.backgrouind_y_offset, 
-            self.settings.backgrouind_x_offset, 
-            anchor="center",
-            image=self.assets.background_image)
+
+        self.canvas.create_image(self.settings.backgrouind_y_offset,
+                                 self.settings.backgrouind_x_offset,
+                                 anchor="center",
+                                 image=self.assets.background_image)
         self.canvas.pack()
 
-        self.top_bar.place(x=0,y=30)
+        self.top_bar.place(x=0, y=30)
 
     def show_game_controls(self):
         self.emotion_form.place(x=10, y=300)
         self.scoreboard.place(x=10, y=100)
+
 
 if __name__ == "__main__":
     root = tk.Tk()

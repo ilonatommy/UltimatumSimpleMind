@@ -1,6 +1,7 @@
 import os
 from pyswip import Prolog
 
+
 class PrologDecisionModule:
     def __init__(self):
         self.prolog = Prolog()
@@ -13,9 +14,9 @@ class PrologDecisionModule:
     def humanOffer(self, offer, emoFace, emoVoice):
         response = list(
             self.prolog.query("humanOffers({}, {}, {}, RobotOffer, RobotDecision)"
-                                          .format(offer, emoFace, emoVoice)))[0]
+                              .format(offer, emoFace, emoVoice)))[0]
         info = {
-            "offer": response["RobotOffer"], 
+            "offer": response["RobotOffer"],
             "decision": "accepted" if response["RobotDecision"] > 0 else "declined"}
 
         return info
@@ -24,4 +25,4 @@ class PrologDecisionModule:
         decision = "yes" if agreed else "no"
         response = list(
             self.prolog.query("humanDecides({})"
-                .format(decision)))[0]
+                              .format(decision)))[0]
